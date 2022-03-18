@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "695954774653",
+    "project_id": "virya-331ae",
+    "storage_bucket": "virya-331ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695954774653:android:feac1febb8604d1f8aaf14",
+        "android_client_info": {
+          "package_name": "com.example.virya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695954774653-eck4veh8q4egrtcc10sm6g75ecaq2gv6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI9Lnepj29Aj12H9341WBj6Me69JG-ApA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695954774653-eck4veh8q4egrtcc10sm6g75ecaq2gv6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

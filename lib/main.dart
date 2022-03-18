@@ -1,106 +1,132 @@
-import 'dart:ffi';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-void main() => runApp(const MyApp());
+import 'package:virya/splashscreen.dart';
+
+
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseMessaging.instance.getToken();
+  
+
+  /*FirebaseMessaging.onBackgroundMessage(_messageHandler);
+
+  FirebaseMessaging.onMessageOpenedApp.listen((message) {
+    print('Message clicked!');
+  });*/
+  runApp(MyApp());
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //systemNavigationBarColor: Colors.blue, // navigation bar color
+    statusBarColor: Colors.transparent, // status bar color
+  ));
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  static const String _title = 'Nav Sample';
-
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: MyStatefulWidget(),
-    );
-  }
-}
-
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({Key? key}) : super(key: key);
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Home',
-    ),
-    Text(
-      'Journaling',
-    ),
-    Text(
-      'Musicc csrd',
-    ),
-    Text(
-      'Exercises',
-    ),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const Icon(
-          Icons.support_agent_rounded,
-          size: 40,
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        builder: (BuildContext context, Widget? widget) {
+          ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
+            return Container();
+          };
+          return widget!;
+        },
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blue,
+          // This makes the visual density adapt to the platform that you run
+          // the app on. For desktop platforms, the controls will be smaller and
+          // closer together (more dense) than on mobile platforms.
+          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        leadingWidth: 50,
-        actions: [
-          const Icon(Icons.supervised_user_circle),
-        ],
-        actionsIconTheme: const IconThemeData(color: Colors.white, size: 40),
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book_outlined),
-            label: 'Journaling',
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.music_note_outlined),
-            label: 'Lofi',
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.fitness_center_outlined),
-            label: 'Exercises',
-            backgroundColor: Colors.blue,
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
-        onTap: _onItemTapped,
-      ),
-    );
+        home: SplashScreen());
   }
 }
 
-class MyStatelessWidget extends StatelessWidget {
-  const MyStatelessWidget({Key? key}) : super(key: key);
+/*class MyApp extends StatefulWidget {
+  // This widget is the root of your application.
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  // FlutterLocalNotificationsPlugin? flutterLocalNotifications;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   var androidInitilize = new AndroidInitializationSettings('ic_launcher111');
+  //   var iOSinitilize = new IOSInitializationSettings();
+  //   var initilizationSettings = new InitializationSettings(android:androidInitilize,iOS:iOSinitilize);
+  //   flutterLocalNotifications = new FlutterLocalNotificationsPlugin();
+  //   flutterLocalNotifications!.initialize(initilizationSettings,
+  //   onSelectNotification: notificationSelected );
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    // Future notificationSelected(String payload)async{
+
+    // }
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blue,
+          // This makes the visual density adapt to the platform that you run
+          // the app on. For desktop platforms, the controls will be smaller and
+          // closer together (more dense) than on mobile platforms.
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: SplashScreen());
   }
+}*/
+/*
+class AuthCheck extends StatefulWidget {
+  const AuthCheck({key}) : super(key: key);
+
+  @override
+  _AuthCheckState createState() => _AuthCheckState();
 }
+
+class _AuthCheckState extends State<AuthCheck> {
+  @override
+  void initState() async{
+    super.initState();
+    DocumentSnapshot document=await FirebaseFirestore.instance.collection('Users').doc(FirebaseAuth.instance.currentUser!.uid).get();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (FirebaseAuth.instance.currentUser != null) {
+      return document.data()['role']? Home();
+    } else {
+      return Welcome();
+    }
+  }
+}*/
